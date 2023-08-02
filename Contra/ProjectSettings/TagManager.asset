@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Ground
+  - BulletPlayer
+  - Enermy
+  - EnemyHit
+  - LimitLeft
+  - BulletGunner
+  - Trap
+  - Coin
+  - Effect
+  - Boom
+  - LineMap
+  - Player2
+  - Player0
+  - Player1
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Enemy
+  - Player
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Default
+    uniqueID: 447842975
+    locked: 0
+  - name: Default
+    uniqueID: 3632689241
+    locked: 0
+  - name: Default
+    uniqueID: 3543057869
+    locked: 0
