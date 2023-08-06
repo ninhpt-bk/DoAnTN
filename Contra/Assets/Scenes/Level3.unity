@@ -36484,10 +36484,22 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1701903597500565812, guid: 256d844c4eca7584fbcde67d75cf893b, type: 3}
+      propertyPath: levelMap
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2831349110214895442, guid: 256d844c4eca7584fbcde67d75cf893b, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1655912970}
+    - target: {fileID: 5420624657488758335, guid: 256d844c4eca7584fbcde67d75cf893b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420624657488758335, guid: 256d844c4eca7584fbcde67d75cf893b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6675217024145251357, guid: 256d844c4eca7584fbcde67d75cf893b, type: 3}
       propertyPath: m_RootOrder
       value: 0

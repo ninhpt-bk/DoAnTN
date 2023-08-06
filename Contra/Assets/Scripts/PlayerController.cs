@@ -50,16 +50,25 @@ public class PlayerController : MonoBehaviour
                 }
         }
     }
-
+    public int runIOS = 0;
+    public bool attackIOS = false;
     // Update is called once per frame
     void Update()
     {
         if (gameController.GetPause())
             return;
-
+        float t = Time.deltaTime;
+        m_timeSpwam -= t;
+        if (delayJump > 0)
+            delayJump -= t;
+        if (uiController.PlayWithIOS())
+        {
+            Run(runIOS);
+            Attack(attackIOS);
+            return;
+        }
         this.Jump();
         this.Run();
-        //this.Sit();
         this.Attack();
     }
     void Run()
@@ -95,28 +104,32 @@ public class PlayerController : MonoBehaviour
         }
         if (value != 0)
         {
-            //playerInformation.Sit(false);
             if (touchTheGround)
             {
                 if (playerInformation.Run() < 1)
                     playerInformation.Run(playerInformation.Run() + 0.1f);
             }
             myRigidbody.velocity = new Vector2(-value * playerInformation.GetSpeed().y, myRigidbody.velocity.y);
-        }
-        else if (playerInformation.Run() > 0)
+        }else if (playerInformation.Run() > 0)
         {
             playerInformation.Run(playerInformation.Run() - 0.025f);
         }
     }
-    public void Attack()
-    {   
-        m_timeSpwam -= Time.deltaTime;
-        if(Input.GetKey(KeyCode.Q) && m_timeSpwam <= 0){ // người dùng bấm phím Q và chiêu đã hồi xong
+    void Attack()
+    {
+        if (Input.GetKey(KeyCode.Q)){
+            Attack(true);
+        }
+        if (Input.GetKeyUp(KeyCode.Q)){
+            Attack(false);
+        }
+    }
+    public void Attack(bool value)
+    {    
+        if(value && m_timeSpwam <= 0){ // người dùng bấm phím Q và chiêu đã hồi xong
             m_timeSpwam = timeSpwam; // làm mới thời gian hồi
-            //playerInformation.Sit(false);
             playerInformation.Attack(true);
             audioController.PlaySound(2);
-            
             if(facingRight){// nếu nhân vật đang quay sang phải:
                 GameObject goBullet = Instantiate(playerInformation.Bullet(), playerInformation.Gun().transform.position, Quaternion.Euler(new Vector3(0, 0, 0))); // tạo viên đạn trùng với hướng hiện tại
                 goBullet.GetComponent<BulletControler>().speed = playerInformation.SpeedBullet();
@@ -130,32 +143,32 @@ public class PlayerController : MonoBehaviour
                 goBullet.GetComponent<BulletControler>().dame = playerInformation.GetDame();
             }
         }
-        if(Input.GetKeyUp(KeyCode.Q))
+        if(!value)
             playerInformation.Attack(false);
     }
     void Jump()
     {
-        if(delayJump > 0)
-            delayJump -= Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
+            Jump2();
+    }
+    public void Jump2()
+    {
+        if (touchTheGround)
         {
-            if (touchTheGround)
-            {
-                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, playerInformation.GetJump());
-                doubleJump = true;
-            }
-            else if (doubleJump)
-            {
-                doubleJump = false;
-                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, playerInformation.GetJump()*0.75f);
-            }
-            else
-                return;
-            delayJump = m_delayJump;
-           // playerInformation.Sit(false);
-            playerInformation.Jump(true);
-            touchTheGround = false;
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, playerInformation.GetJump());
+            doubleJump = true;
         }
+        else if (doubleJump)
+        {
+            doubleJump = false;
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, playerInformation.GetJump()*0.75f);
+        }
+        else
+            return;
+        delayJump = m_delayJump;
+        // playerInformation.Sit(false);
+        playerInformation.Jump(true);
+        touchTheGround = false;
     }
     void OnCollisionStay2D(Collision2D collision)
     {

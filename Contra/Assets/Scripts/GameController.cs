@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,7 +12,7 @@ public class GameController : MonoBehaviour
     LoadMap loadMap;
     UIController uiController;
     PlayerInformation playerInformation;
-
+    PlayerController playerController;
 
     int coin;
     bool pause;
@@ -25,6 +26,7 @@ public class GameController : MonoBehaviour
         uiController = GetComponent<UIController>();
        
         playerInformation = GameObject.FindWithTag("Player").GetComponent<PlayerInformation>();
+        playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         if (playerInformation == null)
             pause = true;
         else
@@ -187,5 +189,32 @@ public class GameController : MonoBehaviour
     }
     public void SetPause(bool _pause) { pause = _pause; }
     public bool GetPause() { return pause; }
+    public void PlayerWithIOS(int type)
+    { // 0 nhay, 1 trai, 2 phai, 3 tan cong
+        //Debug.Log("OK");
+        switch (Mathf.Abs(type))
+        {
+            case 0:
+                {
+                    playerController.Jump2();
+                    break;
+                }
+            case 1:
+                {
+                    playerController.runIOS = type > 0 ? -1 : 0;
+                    break;
+                }
+            case 2:
+                {
+                    playerController.runIOS = type > 0 ? 1 : 0;
+                    break;
+                }
+            case 3:
+                {
+                    playerController.attackIOS = type > 0 ? true : false;
+                    break;
+                }
+        }
+    }
 }
 

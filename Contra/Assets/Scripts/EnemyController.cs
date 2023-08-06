@@ -50,11 +50,10 @@ public class EnemyController : MonoBehaviour
         if(m_timeSpawm > 0)
             m_timeSpawm -= Time.deltaTime;
 
-        Vector3 distance = player.transform.position - index;
-        if (distance.magnitude <= _distance1 && m_timeSpawm <= 0)
+        //Vector3 distance = player.transform.position - index;
+        if (Mathf.Abs(player.transform.position.x - transform.position.x) <= _distance1)
         {
             this.Attack();
-            m_timeSpawm = timeSpawm;
         }
         else
         {
@@ -65,13 +64,21 @@ public class EnemyController : MonoBehaviour
     {
         if (transform.position.x >= index.x - delta && transform.position.x <= index.y + delta)
         {
-            if (player.transform.position.x < transform.position.x)
+            if (player.transform.position.x < transform.position.x && player.transform.position.x >= index.x - delta)
             {
                 MoveLeft();
             }
-            else
+            else if (player.transform.position.x > transform.position.x && player.transform.position.x <= index.x + delta)
             {
                 MoveRight();
+            }
+            else if (isMovingRight)
+            {
+                myRGB2D.MovePosition(transform.position + Vector3.right * speed * Time.deltaTime);
+            }
+            else
+            {
+                myRGB2D.MovePosition(transform.position + Vector3.left * speed * Time.deltaTime);
             }
         }
         else

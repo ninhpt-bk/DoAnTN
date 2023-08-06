@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+//using UnityEngine.UIElements;
 /*using Unity.VisualScripting.Dependencies.NCalc;*/
 
 public class UIController : MonoBehaviour
@@ -18,11 +19,14 @@ public class UIController : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] ItemShow[] arrItem;
     [SerializeField] ButtonItem[] arrBtnItem;
+    [SerializeField] GameObject IOSController;
+    //[SerializeField] Button btnAttack;
     // Start is called before the first frame update
     void Start()
     {
         HuongDan.SetActive(false);
         menuPause.SetActive(false);
+        IOSController.SetActive(false);
         if(NPC != null)
            NPC.SetActive(false);
         gameController = GetComponent<GameController>();
@@ -50,6 +54,11 @@ public class UIController : MonoBehaviour
                 }
             }
         }
+        /*if(btnAttack.gameObject.activeSelf && btnAttack.interactable)
+        {
+            Debug.Log("Tha phim");
+            gameController.PlayerWithIOS(-2);
+        }*/
     }
     public void UseItem(int type, string s)
     {
@@ -108,6 +117,11 @@ public class UIController : MonoBehaviour
         NPC.SetActive(false);
         gameController.SetPause(false);
     }
+    public void PlayWithIOS(bool value)
+    {
+        IOSController.SetActive(value);
+    }
+    public bool PlayWithIOS() { return IOSController.activeSelf; }
 }
 [System.Serializable]
 class ItemShow

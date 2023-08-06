@@ -56,6 +56,11 @@ public class BommerController : MonoBehaviour
         Vector3 distance = this.player.transform.position - transform.position;
         if (distance.magnitude <= _distance1)
         {
+            if((player.transform.position.x < transform.position.x && isMovingRight) || (player.transform.position.x > transform.position.x && !isMovingRight))
+            {
+                isMovingRight = !isMovingRight;
+                this.transform.localScale = new Vector3(-Mathf.Abs(this.transform.localScale.x), this.transform.localScale.y, 0);
+            }
             this.Attack();
         }
         else
@@ -72,13 +77,21 @@ public class BommerController : MonoBehaviour
     {
         if (transform.position.x >= index.x - delta && transform.position.x <= index.y + delta)
         {
-            if (player.transform.position.x < transform.position.x)
+            if (player.transform.position.x < transform.position.x && player.transform.position.x >= index.x - delta)
             {
                 MoveLeft();
             }
-            else
+            else if (player.transform.position.x > transform.position.x && player.transform.position.x <= index.x + delta)
             {
                 MoveRight();
+            }
+            else if (isMovingRight)
+            {
+                myRGB2D.MovePosition(transform.position + Vector3.right * speed * Time.deltaTime);
+            }
+            else
+            {
+                myRGB2D.MovePosition(transform.position + Vector3.left * speed * Time.deltaTime);
             }
         }
         else
